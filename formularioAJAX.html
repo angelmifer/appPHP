@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+            var formulario, nombreC, correoC, edadC, obj, textoC;
+            window.addEventListener("load", inicia);
+            function inicia() {
+                nombreC = document.getElementsByTagName("input")[0];
+                correoC = document.getElementsByTagName("input")[1];
+                edadC = document.getElementsByTagName("input")[2];
+                textoC = document.getElementsByTagName("div")[0];
+                formulario = document.getElementsByTagName("form")[0];
+
+                formulario.addEventListener("submit", envia);
+            }
+
+            
+
+
+            function envia(e) {
+                e.preventDefault();
+
+                var param = "nombre=" + nombreC.value + "&mail=" + correoC.value + "&edad=" + edadC.value;
+                console.log(param)
+                fetch("./formularioAJAX.php?" + param)
+                        .then(resp => resp.text())
+                        .then(dato => {
+                            textoC.innerHTML = dato;
+                            console.log(dato)
+                        })
+
+            }
+
+
+
+            /*
+             function envia(e){
+             e.preventDefault();
+             obj=new XMLHttpRequest();
+             obj.addEventListener("load", carga);
+             obj.open("get", "./formularioAJAX.php");
+             obj.send();
+             }
+             
+             function carga(){
+             console.log(obj.responseText)
+             }
+             
+             */
+        </script>          
+    </head>
+    <body>
+        <form>
+            <label>Nombre</label><input type="text" name="nombre"><br>
+            <label>mail</label><input type="email" name="mail"><br>
+            <label>Edad</label><input type="number" name="edad"><br>
+            <button>Enviar</button>
+        </form>
+        <div class="texto"></div>
+    </body>
+</html>
